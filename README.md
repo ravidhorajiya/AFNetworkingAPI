@@ -1,5 +1,5 @@
 # AFNetworkingAPI
-Create global function with AFNetworking for API calling of GET and POST method. Edit Add topics
+Create global function with AFNetworking for API calling of GET and POST method.
 
 Just call above method
 
