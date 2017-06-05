@@ -14,10 +14,59 @@
 
 @implementation AppDelegate
 
+#pragma mark - shared delegates
++ (instancetype)sharedAppDelegate
+{
+    static AppDelegate * objAppDelegate;
+    if (objAppDelegate == nil)
+    {
+        objAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    }
+    return objAppDelegate;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     return YES;
+}
+
+- (BOOL)connected
+{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    return networkStatus != NotReachable;
+}
+
+- (BOOL)checkInternetConnection
+{
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    BOOL isRechablity = false;
+    
+    Reachability *reachabilityHost = [Reachability reachabilityWithHostName:@"google.com"];
+    NetworkStatus status = [reachabilityHost currentReachabilityStatus];
+    
+    if (networkStatus == NotReachable)
+    {
+        isRechablity = NO;
+        return isRechablity;
+        
+    }
+    else if (status == NotReachable)
+    {
+        return isRechablity;
+    }
+    else if (![self connected])
+    {
+        return isRechablity;
+    }
+    else
+    {
+        isRechablity = YES;
+        return isRechablity;
+    }
+    
+    return isRechablity;
 }
 
 
